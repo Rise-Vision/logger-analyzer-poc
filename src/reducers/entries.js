@@ -2,23 +2,34 @@ import { timestampOf } from '../common'
 
 function getDistribution( data, minTimestamp, interval )
 {
-  const counts = new Array( 100 ).fill( 0 )
+  const counts = ( new Array( 100 ).fill(0) )
+  . map( count => (
+      { count, level: 'info' })
+  )
 
   data.forEach( entry => {
     const timestamp = timestampOf( entry )
     const index =
       Math.min( Math.floor( ( timestamp - minTimestamp ) / interval ), 99 )
 
-    counts[index] += 1
+    const target = counts[index]
+    target.count += 1
+
+    if( target.level != 'error' ) switch( entry.level )
+    {
+      case 'error'  : target.level = 'error'  ; break;
+      case 'warning': target.level = 'warning'; break;
+    }
   })
 
-  const maxCount = Math.max( ...counts )
+  const maxCount = Math.max( ...( counts.map( entry => entry.count ) ) )
 
-  return counts.map( count =>
+  return counts.map( entry =>
   {
-    const size = Math.floor( count * 10 / maxCount )
+    const size = Math.floor( entry.count * 10 / maxCount )
+    const count = size == 0 && entry.count > 0 ? 1 : size
 
-    return size == 0 && count > 0 ? 1 : size
+    return { ...entry, count }
   })
 }
 
