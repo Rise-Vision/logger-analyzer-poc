@@ -8,7 +8,7 @@ class EntryTable extends React.Component
 
   render()
   {
-    const { list } = this.props
+    const { list, single } = this.props
 
     return (
       <div className="table-responsive">
@@ -17,13 +17,29 @@ class EntryTable extends React.Component
             <tr>
               <th scope="col">Timestamp</th>
               <th scope="col">Event</th>
-              <th scope="col">Display id</th>
-              <th scope="col">Company id</th>
+              { single.displayId ? null :
+                (
+                  <th scope="col">Display id</th>
+                )
+              }
+              { single.companyId ? null :
+                (
+                  <th scope="col">Company id</th>
+                )
+              }
               <th scope="col">Source</th>
               <th scope="col">Component id</th>
               <th scope="col">Version</th>
-              <th scope="col">Player</th>
-              <th scope="col">Operating system</th>
+              { single.player ? null :
+                (
+                  <th scope="col">Player</th>
+                )
+              }
+              { single.os ? null :
+                (
+                  <th scope="col">Operating system</th>
+                )
+              }
               <th scope="col">Details</th>
             </tr>
           </thead>
@@ -43,4 +59,8 @@ class EntryTable extends React.Component
   }
 }
 
-export default connect()( EntryTable )
+export default connect( state =>
+  ({
+    single: state.entries.single
+  })
+)( EntryTable )

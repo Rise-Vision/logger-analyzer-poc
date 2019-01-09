@@ -62,6 +62,43 @@ function getSources( data )
   }
 }
 
+function getSingleData( entries )
+{
+  var displayId = null
+  var companyId = null
+  var player = null
+  var os = null
+
+  entries.forEach( entry => {
+    if( displayId == null )
+      displayId = entry.display_id
+    else if( displayId != entry.display_id )
+      displayId = -1
+
+    if( companyId == null )
+      companyId = entry.company_id ? entry.company_id : -2
+    else if( companyId !== -2 && companyId != entry.company_id )
+      companyId = -1
+
+    if( player == null )
+      player = entry.player.version
+    else if( player !== entry.player.version )
+      player = -1
+
+    if( os == null )
+      os = entry.player.os ? entry.player.os : -2
+    else if( os !== -2 && os != entry.player.os )
+      os = -1
+  })
+
+  return {
+    displayId: displayId != -1 && displayId != null,
+    companyId: companyId != -1 && companyId != null,
+    player   : player    != -1 && player    != null,
+    os       : os        != -1 && os        != null
+  }
+}
+
 function loadEntries( state, entries )
 {
   // TODO: validate there is data
@@ -79,6 +116,8 @@ function loadEntries( state, entries )
       index
     })
   )
+
+  const single = getSingleData( entries )
 
   return {
     ...state,
@@ -99,7 +138,8 @@ function loadEntries( state, entries )
       minTimestamp,
       interval,
       distribution
-    }
+    },
+    single
   }
 }
 
@@ -208,6 +248,13 @@ export default function reducers
       minTimestamp: 0,
       interval: 1,
       distribution: []
+    },
+    single:
+    {
+      displayId: false,
+      companyId: false,
+      player: false,
+      os: false
     },
     view: 'list'
   },

@@ -8,6 +8,7 @@ import EntryTable from './EntryTable'
 import Filters from './Filters'
 import Histogram from './Histogram'
 import IconToolbar from './IconToolbar'
+import SingleData from './SingleData'
 
 class Main extends React.Component
 {
@@ -85,6 +86,7 @@ class Main extends React.Component
             <Histogram/>
           </div>
           <div className="col-sm-12 col-lg-4">
+            <SingleData/>
             <Filters/>
           </div>
           <div className={
