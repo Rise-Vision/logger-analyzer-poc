@@ -16,14 +16,14 @@ class IconToolbar extends React.Component
     return (
       <div className="iconToolbar">
         <i className={
-            `fa fa-list  m-2 ${ viewMode == 'list'  ? 'text-primary' : '' }`
-          }
-          onClick={ () => this.selectViewMode( 'list'  ) }
-        />
-        <i className={
             `fa fa-table m-2 ${ viewMode == 'table' ? 'text-primary' : '' }`
           }
           onClick={ () => this.selectViewMode( 'table' ) }
+        />
+        <i className={
+            `fa fa-list  m-2 ${ viewMode == 'list'  ? 'text-primary' : '' }`
+          }
+          onClick={ () => this.selectViewMode( 'list'  ) }
         />
       </div>
     );

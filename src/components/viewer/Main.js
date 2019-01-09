@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import { timestampOf } from '../../common'
 
 import Entries from './Entries'
+import EntryTable from './EntryTable'
 import Filters from './Filters'
 import Histogram from './Histogram'
 import IconToolbar from './IconToolbar'
@@ -88,7 +89,9 @@ class Main extends React.Component
           </div>
           <div className="col-sm-12 col-lg-8">
             <IconToolbar/>
-            <Entries list={ selected }/>
+            { viewMode == 'list' ?
+              <Entries list={ selected }/> : <EntryTable list={ selected }/>
+            }
           </div>
         </div>
       </div>
@@ -101,6 +104,7 @@ export default connect( state =>
     data: state.entries.data,
     filter: state.entries.filter,
     histogram: state.entries.histogram,
-    loaded: state.entries.loaded
+    loaded: state.entries.loaded,
+    viewMode: state.entries.view
   })
 )( Main )
