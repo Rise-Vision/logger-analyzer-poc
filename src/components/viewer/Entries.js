@@ -68,7 +68,11 @@ class Entries extends React.Component
       <div>
         {
           selected.map( ( entry, index ) =>
-            <Entry key={ index } index={ index } data={ entry }/>
+            <Entry
+              key      = { index }
+              data     = { entry }
+              previous = { index == 0 ? {} : selected[index - 1] }
+            />
           )
         }
       </div>

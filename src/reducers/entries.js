@@ -72,7 +72,13 @@ function loadEntries( state, entries )
   const distribution = getDistribution( entries, minTimestamp, interval )
   const sources = getSources( entries )
 
-  const data = entries.map( entry => ({ ...entry, expanded: false }) )
+  const data = entries.map( ( entry, index ) =>
+    ({
+      ...entry,
+      expanded: false,
+      index
+    })
+  )
 
   return {
     ...state,
