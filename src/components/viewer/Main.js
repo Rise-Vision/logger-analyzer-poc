@@ -29,6 +29,10 @@ class Main extends React.Component
             <Filters/>
           </div>
           <div className="col-sm-12 col-lg-8">
+            <div className="iconToolbar">
+              <i className="fa fa-list  m-2 text-primary" ></i>
+              <i className="fa fa-table m-2"></i>
+            </div>
             <Entries/>
           </div>
         </div>
