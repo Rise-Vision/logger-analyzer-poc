@@ -22,10 +22,11 @@ class Entry extends React.Component
   render()
   {
     const { data, sources } = this.props
-    const { event, level, source } = data
+    const { event, level, platform, source } = data
 
-    const { left, right } = sources.find( current => current.name == source ) ||
-      { left: 0, right: 0 }
+    const { left, right } = sources[platform]
+    . find( current => current.name == source ) ||
+        { left: 0, right: 0 }
 
     const formattedDate = new Date( timestampOf( data ) )
     . toISOString()

@@ -38,7 +38,7 @@ class PlatformFilter extends React.Component
       <div role="group" className="btn-group d-flex mb-2">
         <button type="button" className={
             `btn w-100 btn-${
-              showPlayer ? 'primary' : 'secondary'
+              showPlayer ? 'success' : 'secondary'
             }`
           }
           onClick={ () => this.toggle( 'player' ) }

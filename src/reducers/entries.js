@@ -33,11 +33,13 @@ function getDistribution( data, minTimestamp, interval )
   })
 }
 
-function getSources( data )
+function getSourcesFor( data, platform )
 {
-  const sources = data.reduce( ( list, entry ) =>
+  const sources = data
+  .reduce( ( list, entry ) =>
     {
-      return list.includes( entry.source ) ? list : [ ...list, entry.source ]
+      return entry.platform != platform || list.includes( entry.source ) ?
+        list : [ ...list, entry.source ]
     }, []
   )
   .sort()
@@ -50,6 +52,14 @@ function getSources( data )
       right: sources.length > 1 ? ( sources.length - index - 1 ) : 0
     })
   )
+}
+
+function getSources( data )
+{
+  return {
+    content: getSourcesFor( data, 'content' ),
+    player : getSourcesFor( data, 'player'  )
+  }
 }
 
 function loadEntries( state, entries )
@@ -108,17 +118,31 @@ function changeFilter( state, filter )
   }
 }
 
-function toggleFilterSource( state, name )
+function withToggledSource( state, platform, targetPlatform, name )
+{
+  const sources = state.filter.sources[ platform ]
+
+   if( platform != targetPlatform )
+     return sources
+
+  return sources.map( source =>
+    source.name == name ? { ...source, enabled: ! source.enabled } : source
+  )
+}
+
+function toggleFilterSource( state, platform, name )
 {
   return changeFilter( state, {
-    sources: state.filter.sources.map( source =>
-      source.name == name ? { ...source, enabled: ! source.enabled } : source
-    )
+    sources:
+    {
+      content: withToggledSource( state, 'content', platform, name ),
+      player : withToggledSource( state, 'player' , platform, name )
+    }
   })
 }
 
 function clearHistogramSelection( state )
-{ console.log('cleared')
+{
   return {
     ...state,
     histogram:
@@ -132,7 +156,7 @@ function clearHistogramSelection( state )
 }
 
 function selectHistogramEntry( state, selectedIndex )
-{ console.log(selectedIndex)
+{
   return {
     ...state,
     histogram:
@@ -161,7 +185,10 @@ export default function reducers
       showContent: true,
       terms: '',
       termsBuffer: '',
-      sources: []
+      sources: {
+        content: [],
+        player: []
+      }
     },
     histogram:
     {
@@ -180,7 +207,7 @@ export default function reducers
     case 'entries.filter':
       return changeFilter( state, action.filter )
     case 'entries.filter.source.toggle':
-      return toggleFilterSource( state, action.source )
+      return toggleFilterSource( state, action.platform, action.source )
     case 'entries.histogram.clear':
       return clearHistogramSelection( state )
     case 'entries.histogram.select':

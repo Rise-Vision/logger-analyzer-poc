@@ -8,7 +8,9 @@ class SourcesFilter extends React.Component
 
   toggle( name )
   {
-    const enabled = this.props.sources.filter( source => source.enabled )
+    console.log( JSON.stringify( this.props.filter.sources ) )
+    const enabled = this.props.filter.sources[ 'content' ]
+    .filter( source => source.enabled )
 
     // do no let to disable everything
     if( enabled.length == 1 && enabled[0].name == name )
@@ -16,6 +18,7 @@ class SourcesFilter extends React.Component
 
     this.props.dispatch({
       type: 'entries.filter.source.toggle',
+      platform: 'content',
       source: name
     })
   }
@@ -25,7 +28,7 @@ class SourcesFilter extends React.Component
     return (
       <div role="group" className="btn-group btn-group-vertical d-flex">
         {
-          this.props.sources.map( source => (
+          this.props.filter.sources[ 'content' ].map( source => (
             <Source key={ source.name }
               value={ source }
               onClick={ () => this.toggle( source.name ) }
@@ -39,6 +42,6 @@ class SourcesFilter extends React.Component
 
 export default connect( state =>
   ({
-    sources: state.entries.filter.sources
+    filter: state.entries.filter
   })
 )( SourcesFilter )
