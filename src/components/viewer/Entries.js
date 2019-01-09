@@ -23,13 +23,19 @@ class Entries extends React.Component
     return timestamp >= timestampStart && timestamp <= timestampEnd
   }
 
+  enabledSourcesFor( platform )
+  {
+    return this.props.filter.sources[ platform ]
+    . filter( source => source.enabled )
+    . map( source => source.name )
+  }
+
   render()
   {
     const { data, histogram, filter } = this.props
-    const contentSources = filter.sources['content']
-    .filter( source => source.enabled )
-    .map( source => source.name )
-    const sources = contentSources
+    const contentSources = this.enabledSourcesFor( 'content' )
+    const  playerSources = this.enabledSourcesFor( 'player'  )
+    const sources = [ ...contentSources, ...playerSources ]
 
     const histogramSelectedIndex = histogram.distribution.findIndex( entry =>
       entry.selected

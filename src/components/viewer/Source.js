@@ -7,10 +7,11 @@ class Source extends React.Component
   render()
   {
     const { name, enabled } = this.props.value
+    const theme = this.props.theme
 
     return (
       <button type="button" className={
-        `btn w-100 btn-${ enabled ? 'primary' : 'secondary' }`
+        `btn w-100 btn-${ enabled ? theme : 'secondary' }`
         }
         onClick={ () => this.props.onClick() }
       >
@@ -22,8 +23,9 @@ class Source extends React.Component
 
 Source.propTypes =
 {
-  value: PropTypes.object.isRequired,
-  onClick: PropTypes.func.isRequired
+  theme  : PropTypes.string.isRequired,
+  value  : PropTypes.object.isRequired,
+  onClick: PropTypes.func  .isRequired
 }
 
 export default connect()( Source )

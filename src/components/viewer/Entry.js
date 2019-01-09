@@ -36,8 +36,9 @@ class Entry extends React.Component
       <div
         className={
           `alert alert-${
-            level == 'severe' || level == 'error' ? 'danger'  :
-            level == 'warning'                    ? 'warning' : 'info'
+            level    == 'severe' || level == 'error' ? 'danger'  :
+            level    == 'warning'                    ? 'warning' :
+            platform == 'player'                     ? 'success' : 'info'
           } mb-2`
         }
         style={{

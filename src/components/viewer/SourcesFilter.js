@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import React from "react";
 import { connect } from 'react-redux'
 
@@ -8,8 +9,9 @@ class SourcesFilter extends React.Component
 
   toggle( name )
   {
-    console.log( JSON.stringify( this.props.filter.sources ) )
-    const enabled = this.props.filter.sources[ 'content' ]
+    const { filter, platform } = this.props
+
+    const enabled = filter.sources[ platform ]
     .filter( source => source.enabled )
 
     // do no let to disable everything
@@ -18,18 +20,21 @@ class SourcesFilter extends React.Component
 
     this.props.dispatch({
       type: 'entries.filter.source.toggle',
-      platform: 'content',
+      platform,
       source: name
     })
   }
 
   render()
   {
+    const { filter, platform, theme } = this.props
+
     return (
-      <div role="group" className="btn-group btn-group-vertical d-flex">
+      <div role="group" className="btn-group btn-group-vertical d-flex mb-2">
         {
-          this.props.filter.sources[ 'content' ].map( source => (
+          filter.sources[ platform ].map( source => (
             <Source key={ source.name }
+              theme={ theme }
               value={ source }
               onClick={ () => this.toggle( source.name ) }
             />
@@ -38,6 +43,12 @@ class SourcesFilter extends React.Component
       </div>
     );
   }
+}
+
+SourcesFilter.propTypes =
+{
+  platform: PropTypes.string.isRequired,
+  theme   : PropTypes.string.isRequired
 }
 
 export default connect( state =>
