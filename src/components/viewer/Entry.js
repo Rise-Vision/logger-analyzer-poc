@@ -46,7 +46,7 @@ class Entry extends React.Component
         { !previousTimestamp ||
           currentTimestamp.getDay() != previousTimestamp.getDay() ?
           (
-            <h3>
+            <h3 className="mt-4">
               { currentTimestamp.toLocaleDateString( "en-US", DATE_FORMAT_OPTIONS ) }
             </h3>
           ) : null

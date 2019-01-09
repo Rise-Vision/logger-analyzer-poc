@@ -10,6 +10,7 @@ class TextFilter extends React.Component
 
     this.changeTerms = this.changeTerms.bind( this )
     this.changeTermsBuffer = this.changeTermsBuffer.bind( this )
+    this.search = this.search.bind( this )
   }
 
   changeTermsBuffer(e)
@@ -25,6 +26,12 @@ class TextFilter extends React.Component
     if( e.keyCode != 13 )
       return;
 
+    this.search()
+  }
+
+  search()
+  {
+    console.log('aaa')
     const { termsBuffer } = this.props.filter
 
     this.props.dispatch({
@@ -38,12 +45,21 @@ class TextFilter extends React.Component
     const { termsBuffer } = this.props.filter
 
     return (
-      <input type="text" className="form-control mb-2"
-        placeholder="search terms"
-        value={ termsBuffer }
-        onChange={ this.changeTermsBuffer }
-        onKeyDown={ this.changeTerms }
-      />
+      <div className="input-group mb-2">
+        <input type="text" className="form-control"
+          placeholder="search terms"
+          value={ termsBuffer }
+          onChange={ this.changeTermsBuffer }
+          onKeyDown={ this.changeTerms }
+        />
+        <div className="input-group-append">
+          <button className="btn btn-secondary" type="button"
+            onClick={ this.search }
+          >
+            <i className="fa fa-search"></i>
+          </button>
+        </div>
+      </div>
     );
   }
 }
