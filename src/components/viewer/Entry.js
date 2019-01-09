@@ -65,7 +65,7 @@ class Entry extends React.Component
           }}
         >
           <div onClick={ () => this.toggleExpansion() }>
-            { formattedCurrentTime }: { event }
+            { formattedCurrentTime }: { source } - { event }
             { data.expanded ? <EntryDetails data={ data }/> : null }
           </div>
         </div>

@@ -7,9 +7,18 @@ class EntryRow extends React.Component
   render()
   {
     const { data } = this.props
+    const { platform, level } = data
 
     return (
-      <tr>
+      <tr className=
+        {
+          `table-${
+            level    == 'severe' || level == 'error' ? 'danger'  :
+            level    == 'warning'                    ? 'warning' :
+            platform == 'player'                     ? 'success' : 'info'
+          }`
+        }
+      >
         <th scope="col">{ data.ts }</th>
         <th scope="col">{ data.event }</th>
         <th scope="col">{ data.display_id }</th>
