@@ -15,8 +15,11 @@ function getDistribution( data, minTimestamp, interval )
   const maxCount = Math.max( ...counts )
 
   return counts.map( count =>
-    Math.floor( count * 10 / maxCount )
-  )
+  {
+    const size = Math.floor( count * 10 / maxCount )
+
+    return size == 0 && count > 0 ? 1 : size
+  })
 }
 
 function getSources( data )

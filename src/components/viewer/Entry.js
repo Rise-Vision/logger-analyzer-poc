@@ -2,6 +2,8 @@ import PropTypes from 'prop-types'
 import React from "react";
 import { connect } from 'react-redux'
 
+import EntryDetails from './EntryDetails'
+
 import { timestampOf } from '../../common'
 
 const marginUnit = 20
@@ -43,7 +45,8 @@ class Entry extends React.Component
         }}
       >
         <div onClick={ () => this.toggleExpansion() }>
-          { formattedDate }: { event } - { data.expanded ? 1:0 }
+          { formattedDate }: { event }
+          { data.expanded ? <EntryDetails data={ data }/> : null }
         </div>
       </div>
     );
