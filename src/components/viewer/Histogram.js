@@ -13,7 +13,7 @@ class Histogram extends React.Component
       <div className="histogram">
         {
           distribution.map( ( entry, index ) =>
-            <Bar key={ index } entry={ entry }/>
+            <Bar key={ index } index={ index } entry={ entry }/>
           )
         }
       </div>

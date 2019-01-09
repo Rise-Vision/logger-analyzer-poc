@@ -4,7 +4,7 @@ function getDistribution( data, minTimestamp, interval )
 {
   const counts = ( new Array( 100 ).fill(0) )
   . map( count => (
-      { count, level: 'info' })
+      { count, level: 'info', selected: false })
   )
 
   data.forEach( entry => {
@@ -117,6 +117,37 @@ function toggleFilterSource( state, name )
   })
 }
 
+function clearHistogramSelection( state )
+{ console.log('cleared')
+  return {
+    ...state,
+    histogram:
+    {
+      ...state.histogram,
+      distribution: state.histogram.distribution.map( entry =>
+        ({ ...entry, selected: false })
+      )
+    }
+  }
+}
+
+function selectHistogramEntry( state, selectedIndex )
+{ console.log(selectedIndex)
+  return {
+    ...state,
+    histogram:
+    {
+      ...state.histogram,
+      distribution: state.histogram.distribution.map( ( entry, index ) =>
+        ({
+          ...entry,
+          selected: ( index == selectedIndex )
+        })
+      )
+    }
+  }
+}
+
 export default function reducers
 (
   state =
@@ -150,6 +181,10 @@ export default function reducers
       return changeFilter( state, action.filter )
     case 'entries.filter.source.toggle':
       return toggleFilterSource( state, action.source )
+    case 'entries.histogram.clear':
+      return clearHistogramSelection( state )
+    case 'entries.histogram.select':
+      return selectHistogramEntry( state, action.index )
     case 'entries.load':
       return loadEntries( state, action.data )
   }
