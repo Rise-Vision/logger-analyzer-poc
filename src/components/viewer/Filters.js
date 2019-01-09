@@ -12,18 +12,24 @@ class Filters extends React.Component
 
   render()
   {
-    const { showContent, showPlayer } = this.props.filter
+    const { showContent, showPlayer, visible } = this.props.filter
 
     return (
       <div>
-        <LevelFilter/>
-        <PlatformFilter/>
-        <TextFilter/>
-        { showPlayer  ?
-            <SourcesFilter theme="success" platform="player" /> : null
-        }
-        { showContent ?
-            <SourcesFilter theme="primary" platform="content"/> : null
+        { visible ?
+          (
+            <div className="mt-2">
+              <LevelFilter/>
+              <PlatformFilter/>
+              <TextFilter/>
+              { showPlayer  ?
+                  <SourcesFilter theme="success" platform="player" /> : null
+              }
+              { showContent ?
+                  <SourcesFilter theme="primary" platform="content"/> : null
+              }
+            </div>
+          ) : null
         }
       </div>
     );

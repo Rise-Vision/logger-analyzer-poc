@@ -87,7 +87,9 @@ class Main extends React.Component
           <div className="col-sm-12 col-lg-4">
             <Filters/>
           </div>
-          <div className="col-sm-12 col-lg-8">
+          <div className={
+            `col-sm-12 ${ filter.visible ? 'col-lg-8' : '' }`
+          }>
             <IconToolbar/>
             { viewMode == 'list' ?
               <Entries list={ selected }/> : <EntryTable list={ selected }/>

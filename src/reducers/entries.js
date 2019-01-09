@@ -91,7 +91,8 @@ function loadEntries( state, entries )
       showContent: true,
       terms: '',
       termsBuffer: '',
-      sources
+      sources,
+      visible: true
     },
     histogram:
     {
@@ -199,7 +200,8 @@ export default function reducers
       sources: {
         content: [],
         player: []
-      }
+      },
+      visible: true
     },
     histogram:
     {

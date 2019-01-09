@@ -9,21 +9,35 @@ class IconToolbar extends React.Component
     this.props.dispatch({ type: 'entries.view.change', mode })
   }
 
+  setFiltersVisibility( visible )
+  {
+    this.props.dispatch(
+    {
+      type: 'entries.filter',
+      filter: { visible }
+    })
+  }
+
   render()
   {
-    const { viewMode } = this.props
+    const { viewMode, visible } = this.props
 
     return (
       <div className="iconToolbar">
         <i className={
-            `fa fa-table m-2 ${ viewMode == 'table' ? 'text-primary' : '' }`
+            `m-2 fa fa-table ${ viewMode == 'table' ? 'text-primary' : '' }`
           }
           onClick={ () => this.selectViewMode( 'table' ) }
         />
         <i className={
-            `fa fa-list  m-2 ${ viewMode == 'list'  ? 'text-primary' : '' }`
+            `m-2 fa fa-list  ${ viewMode == 'list'  ? 'text-primary' : '' }`
           }
           onClick={ () => this.selectViewMode( 'list'  ) }
+        />
+        <i className={
+            `m-2 fa fa-arrow-${ visible ? 'left' : 'right' }`
+          }
+          onClick={ () => this.setFiltersVisibility( !visible ) }
         />
       </div>
     );
@@ -33,6 +47,7 @@ class IconToolbar extends React.Component
 
 export default connect( state =>
   ({
-    viewMode: state.entries.view
+    viewMode: state.entries.view,
+    visible: state.entries.filter.visible
   })
 )( IconToolbar )
