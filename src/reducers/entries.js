@@ -178,6 +178,11 @@ function selectHistogramEntry( state, selectedIndex )
   }
 }
 
+function changeViewMode( state, view )
+{
+  return { ...state, view }
+}
+
 export default function reducers
 (
   state =
@@ -201,7 +206,8 @@ export default function reducers
       minTimestamp: 0,
       interval: 1,
       distribution: []
-    }
+    },
+    view: 'list'
   },
   action
 )
@@ -220,6 +226,8 @@ export default function reducers
       return selectHistogramEntry( state, action.index )
     case 'entries.load':
       return loadEntries( state, action.data )
+    case 'entries.view.change':
+      return changeViewMode( state, action.mode )
   }
 
   return state
