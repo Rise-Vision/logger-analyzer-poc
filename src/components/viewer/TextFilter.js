@@ -15,7 +15,8 @@ class TextFilter extends React.Component
 
   changeTermsBuffer(e)
   {
-    this.props.dispatch({
+    this.props.dispatch(
+    {
       type: 'entries.filter',
       filter: { termsBuffer: e.target.value }
     })

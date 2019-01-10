@@ -3,10 +3,12 @@ import { routerReducer } from "react-router-redux";
 import { reducer as formReducer } from "redux-form";
 
 import entries from './entries'
+import loader  from './loader'
 
 // main reducers
 export const reducers = combineReducers({
   routing: routerReducer,
   form: formReducer,
-  entries
+  entries,
+  loader
 });
